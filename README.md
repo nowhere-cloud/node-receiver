@@ -1,2 +1,2 @@
 # node-receiver
-Receiving the response from RabbitMQ
+Receiving the Response from RabbitMQ

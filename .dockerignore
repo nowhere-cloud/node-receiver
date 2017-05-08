@@ -1,0 +1,12 @@
+node_modules
+.editorconfig
+.codeclimate.yml
+.eslintignore
+.eslintrc
+.gitignore
+.pug-lintrc
+.tern-project
+gulpfile.js
+assets/
+LICENSE
+nodemon.json
