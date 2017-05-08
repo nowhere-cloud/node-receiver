@@ -18,8 +18,8 @@ class Rabbit {
    * @memberOf Rabbit
    */
   constructor() {
-    this.AURI = process.env.AMQP_URI || "amqp://localhost";
-    this.listen = "out";
+    this.AURI = process.env.AMQP_URI || 'amqp://localhost';
+    this.listen = 'out';
   }
 
   /**
@@ -34,7 +34,7 @@ class Rabbit {
   receiveMessage() {
     const listen = this.listen;
     AMQP.connect(this.AURI).then((conn) => {
-      process.once("SIGINT", () => {
+      process.once('SIGINT', () => {
         conn.close();
       });
       return conn.createChannel().then((ch) => {
@@ -47,7 +47,7 @@ class Rabbit {
               result: msgContent
             });
           }, {
-              noAck: true
+            noAck: true
           });
         });
       });
