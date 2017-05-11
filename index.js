@@ -11,10 +11,13 @@ AMQP.connect(process.env.AMQP_URI).then((conn) => {
     conn.close();
   });
   return conn.createChannel().then((ch) => {
-    ch.assertQueue(listen).then(() => {
+    let ababa = ch.assertQueue(listen, { durable: true });
+
+    ababa = ababa.then((_qReady) => {
       ch.consume(listen, (msg) => {
+        console.log(msg.properties.correlationId);
         return Mongo.Task.update({
-          uuid: msg.properties.correlationId.toString()
+          uuid: msg.properties.correlationId
         }, {
           result: JSON.parse(msg.content.toString())
         });
@@ -22,6 +25,10 @@ AMQP.connect(process.env.AMQP_URI).then((conn) => {
       .then((rsvp) => {
         console.log(rsvp);
       });
+    });
+
+    return ababa.then((_consumerReady) => {
+      console.log(' [*] Waiting for messages. To exit press CTRL+C');
     });
   });
 }).catch((e) => {
